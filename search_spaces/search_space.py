@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Set
 from state import State
 
 
@@ -17,4 +17,16 @@ class SearchSpace:
 
     def h(self, s: State) -> float:
         """Returns the heuristic value of the given state"""
+        raise NotImplemented
+
+    def h_cap(self, s: State) -> float:
+        """Returns the heuristic value of the given state as if all operator costs were 1"""
+        raise NotImplemented
+
+    def h_cost_adapted(self, c: float, s: State):
+        """The same algorithm to compute h, but adds a constant c to each operator cost."""
+        raise NotImplemented
+
+    def operator_costs(self) -> Set[float]:
+        """Returns a set of all operator costs"""
         raise NotImplemented
