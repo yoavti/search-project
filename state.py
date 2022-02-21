@@ -1,4 +1,5 @@
 from typing import Optional
+import numpy as np
 
 
 class State:
@@ -9,6 +10,8 @@ class State:
 
     def __hash__(self):
         if isinstance(self.data, list):
+            if isinstance(self.data[0], set):
+                return hash(tuple(map(frozenset, self.data)))
             return hash(tuple(self.data))
         return hash(self.data)
 
