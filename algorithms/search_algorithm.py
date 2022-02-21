@@ -1,11 +1,10 @@
 from queue import PriorityQueue
 from time import time
-from search_spaces.search_space import SearchSpace
 from state import State
 
 
 class SearchAlgorithm:
-    def __init__(self, search_space: SearchSpace):
+    def __init__(self, search_space):
         self.search_space = search_space
         self.open_list = PriorityQueue()
 
@@ -42,9 +41,10 @@ class SearchAlgorithm:
                 if neighbor in closed_list:
                     continue
                 neighbor.g = s.g + cost
+                neighbor.length = s.length + 1
                 self.insert_to_open(neighbor)
             closed_list.add(s)
-        return {s: s.g for s in closed_list}
+        return {s: s.g for s in closed_list}, {s: s.length for s in closed_list}
 
     def insert_to_open(self, s: State):
         self.open_list.put((self.f(s), s))
