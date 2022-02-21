@@ -1,5 +1,4 @@
 from typing import Optional
-import numpy as np
 
 
 class State:
@@ -7,6 +6,7 @@ class State:
         self.data = data
         self.prev: Optional[State] = None
         self.g = 0
+        self.length = 0
 
     def __hash__(self):
         if isinstance(self.data, list):
