@@ -8,10 +8,12 @@ class State:
         self.g = 0
 
     def __hash__(self):
+        if isinstance(self.data, list):
+            return hash(tuple(self.data))
         return hash(self.data)
 
     def __eq__(self, other):
-        return self.data == other.data
+        return isinstance(other, type(self)) and self.data == other.data
 
     def __lt__(self, other):
         return self.data < other.data
