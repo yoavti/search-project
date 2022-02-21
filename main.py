@@ -19,13 +19,13 @@ def start_experiment(search_space, algorithm_constructor):
     return algorithm
 
 
-def pancake_experiment(graph_size, algorithm_constructor, num_runs=100, print_runs=False):
+def pancake_experiment(graph_size, algorithm_constructor, num_runs=1, print_runs=False):
     search_space = Pancake(graph_size)
     algorithm = start_experiment(search_space, algorithm_constructor)
     runtime_sum = 0
     expanded_states_sum = 0
     for i in range(num_runs):
-        search_space.shuffle_start()
+        search_space.reset_start()
         runtime, expanded_states = algorithm.until_goal()
         if print_runs:
             print(i)
@@ -73,6 +73,7 @@ def non_cost_adapted(algorithm):
 
 def epsilon_cost_adapted(algorithm):
     def ret(search_space, epsilon, M):
+        print('epsilon')
         return algorithm(search_space, epsilon)
 
     return ret
@@ -80,6 +81,7 @@ def epsilon_cost_adapted(algorithm):
 
 def M_cost_adapted(algorithm):
     def ret(search_space, epsilon, M):
+        print('M')
         return algorithm(search_space, M)
 
     return ret
@@ -96,5 +98,5 @@ if __name__ == '__main__':
     peg_disk_combinations_backup = [(3, 10), (4, 8), (5, 6), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5)]
     peg_disk_combinations = [(3, 10), (4, 8), (5, 6)]
     hanoi_experiments(peg_disk_combinations, algorithm_constructors)
-    sizes = list(range(2, 10))
-    # pancake_experiments(sizes, algorithm_constructors)
+    sizes = list(range(2, 9))
+    pancake_experiments(sizes, algorithm_constructors)
