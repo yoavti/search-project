@@ -1,6 +1,5 @@
 from typing import List
 import random
-from algorithms.ucs import UCS
 from search_spaces.search_space import SearchSpace
 from state import State
 import copy
@@ -29,34 +28,19 @@ def sub_lists(arr):
 class Pancake(SearchSpace):
     def __init__(self, graph_size):
         assert graph_size >= 2
+        super().__init__()
         self.graph_size = graph_size
         self.start_state = State(list(range(1, self.graph_size + 1)))
         self.shuffle_start()
-        self.h_dict = {}
 
     def shuffle_start(self):
         random.shuffle(self.start_state.data)
-
-    def get_start(self):
-        return self.start_state
-
-    def generate_h(self):
-        self.h_dict = UCS(self).all_states()
 
     def get_neighbors(self, s):
         neighbors = []
         for i in range(1, self.graph_size):
             neighbors.append((State(flip(s.data, i)), sum(s.data[:i])))
         return neighbors
-
-    def h(self, s):
-        return self.h_dict[s]
-
-    def h_cap(self, s):
-        return self.h_dict[s]
-
-    def h_cost_adapted(self, c, s):
-        return self.h_dict[s] + c
 
     def operator_costs(self):
         return set(map(sum, sub_lists(self.start_state.data)))

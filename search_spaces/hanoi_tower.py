@@ -1,32 +1,19 @@
-import numpy as np
-from algorithms.ucs import UCS
 from search_spaces.search_space import SearchSpace
 from state import State
 import copy
-
-
-def first_nonzero(arr, invalid_val=-1):
-    mask = arr != 0
-    return np.where(mask.any(axis=0), mask.argmax(axis=0), invalid_val)
 
 
 class HanoiTower(SearchSpace):
     def __init__(self, pegs, disks):
         assert pegs >= 3
         assert disks >= 2
+        super().__init__()
         self.pegs = pegs
         self.disks = disks
         hanoi_towers = [set() for _ in range(self.pegs)]
         first_tower = set(range(self.disks))
         hanoi_towers[0] = first_tower
         self.start_state = State(hanoi_towers)
-        self.h_dict = {}
-
-    def get_start(self):
-        return self.start_state
-
-    def generate_h(self):
-        self.h_dict = UCS(self).all_states()
 
     def calc_smallest_disc(self, s, peg):
         tower = s.data[peg]
@@ -52,15 +39,6 @@ class HanoiTower(SearchSpace):
                 to_add[dst].add(src_smallest)
                 neighbors.append((State(to_add), src_smallest + 1))
         return neighbors
-
-    def h(self, s):
-        return self.h_dict[s]
-
-    def h_cap(self, s):
-        return self.h_dict[s]
-
-    def h_cost_adapted(self, c, s):
-        return self.h_dict[s] + c
 
     def operator_costs(self):
         return set(range(1, self.disks + 1))
