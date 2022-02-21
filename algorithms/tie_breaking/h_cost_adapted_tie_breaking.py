@@ -1,5 +1,5 @@
-from a_star_tie_breaking import AStarTieBreaking
-from search_spaces import SearchSpace
+from algorithms.tie_breaking.a_star_tie_breaking import AStarTieBreaking
+from search_spaces.search_space import SearchSpace
 
 
 class HCostAdaptedTieBreaking(AStarTieBreaking):

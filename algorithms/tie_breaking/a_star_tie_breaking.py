@@ -1,4 +1,4 @@
-from algorithms import AStar
+from algorithms.a_star import AStar
 from state import State
 
 

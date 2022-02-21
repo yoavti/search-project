@@ -1,4 +1,4 @@
-from a_star_tie_breaking import AStarTieBreaking
+from algorithms.tie_breaking.a_star_tie_breaking import AStarTieBreaking
 
 
 class HTieBreaking(AStarTieBreaking):
