@@ -13,7 +13,7 @@ class SearchSpace:
 
     def is_goal(self, s: State) -> bool:
         """Returns whether the given state is a goal"""
-        raise NotImplemented
+        return s.data == self.get_goal().data
 
     def get_neighbors(self, s: State) -> List[Tuple[State, float]]:
         """Returns all neighbor states of the given state, as well as the cost to reach them"""
