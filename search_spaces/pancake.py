@@ -21,16 +21,19 @@ def flip(array, i) -> List[int]:
 
 
 class Pancake(SearchSpace):
-    def __init__(self, graph_size=int(input("enter pancake problem size"))):
+    def __init__(self, graph_size=int(input("enter pancake problem size "))):
         self.graph_size = graph_size
+        pancake_array = list(range(1, self.graph_size + 1))
+        random.shuffle(pancake_array)
+        self.start_state = State(pancake_array)
         self.h_dict = {}
 
     def get_start(self) -> State:
         """Returns the start state for the search"""
-        pancake_array = list(range(1, self.graph_size + 1))
-        random.shuffle(pancake_array)
+        return self.start_state
+
+    def generate_h(self):
         self.h_dict = UCS(self).all_states()
-        return State(pancake_array)
 
     def is_goal(self, s: State) -> bool:
         """Returns whether the given state is a goal"""
@@ -58,3 +61,7 @@ class Pancake(SearchSpace):
     def operator_costs(self) -> Set[float]:
         """Returns a set of all operator costs"""
         raise NotImplemented
+
+    def get_goal(self) -> State:
+        pancake_array = list(range(1, self.graph_size + 1))
+        return State(pancake_array)

@@ -32,7 +32,7 @@ class SearchAlgorithm:
     def all_states(self):
         self.open_list = PriorityQueue()
         closed_list = set()
-        self.insert_to_open(self.search_space.get_start())
+        self.insert_to_open(self.search_space.get_goal())
         while not self.open_list.empty():
             s: State = self.open_list.get()[-1]
             if s in closed_list:

@@ -7,6 +7,10 @@ class SearchSpace:
         """Returns the start state for the search"""
         raise NotImplemented
 
+    def generate_h(self):
+        """Generates the perfect heuristic function"""
+        raise NotImplemented
+
     def is_goal(self, s: State) -> bool:
         """Returns whether the given state is a goal"""
         raise NotImplemented
@@ -29,4 +33,8 @@ class SearchSpace:
 
     def operator_costs(self) -> Set[float]:
         """Returns a set of all operator costs"""
+        raise NotImplemented
+
+    def get_goal(self) -> State:
+        """Returns the goal state of the search"""
         raise NotImplemented

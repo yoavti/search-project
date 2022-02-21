@@ -1,5 +1,7 @@
 from typing import List, Tuple, Set
 import numpy as np
+
+from algorithms import UCS
 from search_spaces import SearchSpace
 from state import State
 import copy
@@ -11,15 +13,20 @@ def first_nonzero(arr, invalid_val=-1):
 
 
 class HanoiTower(SearchSpace):
-    def __init__(self, disks=int(input("enter how many disks to put on the peg"))):
+    def __init__(self, disks=int(input("enter how many disks to put on the peg "))):
         self.disks = disks
-
-    def get_start(self) -> State:
-        """Returns the start state for the search"""
         hanoi_towers = np.zeros((10, self.disks))
         first_tower = np.array(list(range(1, self.disks + 1)))
         hanoi_towers[0] = first_tower
-        return State(hanoi_towers)
+        self.start_state = State(hanoi_towers)
+        self.h_dict = {}
+
+    def get_start(self) -> State:
+        """Returns the start state for the search"""
+        return self.start_state
+
+    def generate_h(self):
+        self.h_dict = UCS(self).all_states()
 
     def is_goal(self, s: State) -> bool:
         """Returns whether the given state is a goal"""
@@ -50,16 +57,21 @@ class HanoiTower(SearchSpace):
 
     def h(self, s: State) -> float:
         """Returns the heuristic value of the given state"""
-        raise NotImplemented
+        return self.h_dict[s]
 
     def h_cap(self, s: State) -> float:
         """Returns the heuristic value of the given state as if all operator costs were 1"""
-        raise NotImplemented
+        return self.h_dict[s]
 
     def h_cost_adapted(self, c: float, s: State):
         """The same algorithm to compute h, but adds a constant c to each operator cost."""
-        raise NotImplemented
+        return self.h_dict[s] + c
 
     def operator_costs(self) -> Set[float]:
         """Returns a set of all operator costs"""
         raise NotImplemented
+
+    def get_goal(self) -> State:
+        hanoi_towers_sorted = np.zeros((10, self.disks))
+        last_tower = np.array(list(range(1, self.disks + 1)))
+        return State(hanoi_towers_sorted)
