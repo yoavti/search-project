@@ -33,7 +33,7 @@ class SearchSpace:
         """Returns the heuristic value of the given state as if all operator costs were 1"""
         return self.length_dict[s]
 
-    def h_cost_adapted(self, c: float, s: State):
+    def h_cost_adapted(self, c: float, s: State) -> float:
         """The same algorithm to compute h, but adds a constant c to each operator cost."""
         return self.h_dict[s] + c * self.length_dict[s]
 
