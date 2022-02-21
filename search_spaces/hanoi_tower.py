@@ -37,11 +37,11 @@ class HanoiTower(SearchSpace):
                 to_add = copy.deepcopy(s.data)
                 to_add[src].remove(src_smallest)
                 to_add[dst].add(src_smallest)
-                neighbors.append((State(to_add), src_smallest + 1))
+                neighbors.append((State(to_add), src_smallest))
         return neighbors
 
     def operator_costs(self):
-        return set(range(1, self.disks + 1))
+        return set(range(self.disks))
 
     def get_goal(self):
         hanoi_towers_sorted = [set() for _ in range(self.pegs)]
