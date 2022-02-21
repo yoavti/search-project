@@ -60,7 +60,9 @@ class Pancake(SearchSpace):
 
     def operator_costs(self) -> Set[float]:
         """Returns a set of all operator costs"""
-        raise NotImplemented
+        costs = set()
+        costs.add(1)
+        return costs
 
     def get_goal(self) -> State:
         pancake_array = list(range(1, self.graph_size + 1))

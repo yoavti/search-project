@@ -69,7 +69,9 @@ class HanoiTower(SearchSpace):
 
     def operator_costs(self) -> Set[float]:
         """Returns a set of all operator costs"""
-        raise NotImplemented
+        costs = set()
+        costs.add(1)
+        return costs
 
     def get_goal(self) -> State:
         hanoi_towers_sorted = np.zeros((10, self.disks))
