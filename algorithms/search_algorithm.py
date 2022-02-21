@@ -1,6 +1,6 @@
 from queue import PriorityQueue
 from time import time
-from search_spaces import SearchSpace
+from search_spaces.search_space import SearchSpace
 from state import State
 
 
@@ -19,15 +19,16 @@ class SearchAlgorithm:
             if s in closed_list:
                 continue
             if self.search_space.is_goal(s):
-                print('Runtime:', time() - start_time)
-                print('Expanded States:', len(closed_list))
-                return
+                runtime = time() - start_time
+                expanded_states = len(closed_list)
+                return runtime, expanded_states
             for neighbor, cost in self.search_space.get_neighbors(s):
                 if neighbor in closed_list:
                     continue
                 neighbor.g = s.g + cost
                 self.insert_to_open(neighbor)
             closed_list.add(s)
+        raise RuntimeError('did not reach goal')
 
     def all_states(self):
         self.open_list = PriorityQueue()
