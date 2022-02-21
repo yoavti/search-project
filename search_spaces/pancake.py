@@ -6,7 +6,7 @@ from state import State
 import copy
 
 
-def flip(array, i: int) -> List[int]:
+def flip(array: List[int], i: int) -> List[int]:
     start = 0
     arr = copy.deepcopy(array)
     while start < i:
@@ -16,6 +16,14 @@ def flip(array, i: int) -> List[int]:
         start += 1
         i -= 1
     return arr
+
+
+def sub_lists(arr):
+    lists = [[]]
+    for i in range(len(arr) + 1):
+        for j in range(i):
+            lists.append(arr[j: i])
+    return lists
 
 
 class Pancake(SearchSpace):
@@ -38,7 +46,7 @@ class Pancake(SearchSpace):
     def get_neighbors(self, s):
         neighbors = []
         for i in range(1, self.graph_size):
-            neighbors.append((State(flip(s.data, i)), 1))
+            neighbors.append((State(flip(s.data, i)), sum(s.data[:i])))
         return neighbors
 
     def h(self, s):
@@ -51,7 +59,7 @@ class Pancake(SearchSpace):
         return self.h_dict[s] + c
 
     def operator_costs(self):
-        return {1}
+        return set(map(sum, sub_lists(self.start_state.data)))
 
     def get_goal(self):
         pancake_array = list(range(1, self.graph_size + 1))
