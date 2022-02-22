@@ -1,5 +1,4 @@
 from typing import List
-import random
 from search_spaces.search_space import SearchSpace
 from state import State
 import copy
@@ -38,6 +37,10 @@ class Pancake(SearchSpace):
             if h == max_h:
                 self.start_state = s
                 return
+
+    def generate_h(self):
+        super().generate_h()
+        self.reset_start()
 
     def get_neighbors(self, s):
         neighbors = []
