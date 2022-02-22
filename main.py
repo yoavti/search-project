@@ -75,8 +75,8 @@ if __name__ == '__main__':
                                epsilon_cost_adapted(HCostAdaptedTieBreaking),
                                M_cost_adapted(FCostAdaptedTieBreaking),
                                M_cost_adapted(HCostAdaptedTieBreaking)]
-    all_peg_disk_combinations = [(3, 12), (4, 9), (5, 7), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5)]
-    chosen_peg_disk_combinations = [(pegs, disks) for pegs, disks in all_peg_disk_combinations if pegs < disks]
-    hanoi_experiments(chosen_peg_disk_combinations, _algorithm_constructors)
+    # hyperparameters for which generate_h took less than a minute
+    _peg_disk_combinations = [(3, 12), (4, 9), (5, 7)]
+    hanoi_experiments(_peg_disk_combinations, _algorithm_constructors)
     _pancakes = 9
     pancake_experiment(_pancakes, _algorithm_constructors)
