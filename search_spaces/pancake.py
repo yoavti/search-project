@@ -2,6 +2,7 @@ from typing import List
 from search_spaces.search_space import SearchSpace
 from state import State
 import copy
+from util import is_ge
 
 
 def flip(array: List[int], i: int) -> List[int]:
@@ -25,11 +26,11 @@ def sub_lists(arr):
 
 
 class Pancake(SearchSpace):
-    def __init__(self, graph_size):
-        assert graph_size >= 2
+    def __init__(self, pancakes):
+        is_ge(pancakes, 'pancakes', 2)
         super().__init__()
-        self.graph_size = graph_size
-        self.start_state = State(list(range(self.graph_size)))
+        self.pancakes = pancakes
+        self.start_state = State(list(range(self.pancakes)))
 
     def reset_start(self):
         max_h = max(self.h_dict.values())
@@ -44,7 +45,7 @@ class Pancake(SearchSpace):
 
     def get_neighbors(self, s):
         neighbors = []
-        for i in range(1, self.graph_size):
+        for i in range(1, self.pancakes):
             neighbors.append((State(flip(s.data, i)), s.data[i]))
         return neighbors
 
@@ -52,5 +53,5 @@ class Pancake(SearchSpace):
         return set(map(sum, sub_lists(self.start_state.data)))
 
     def get_goal(self):
-        pancake_array = list(range(self.graph_size))
+        pancake_array = list(range(self.pancakes))
         return State(pancake_array)

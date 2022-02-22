@@ -1,12 +1,13 @@
 from search_spaces.search_space import SearchSpace
 from state import State
 import copy
+from util import is_ge
 
 
 class HanoiTower(SearchSpace):
     def __init__(self, pegs, disks):
-        assert pegs >= 3
-        assert disks >= 2
+        is_ge(pegs, 'pegs', 3)
+        is_ge(disks, 'disks', 2)
         super().__init__()
         self.pegs = pegs
         self.disks = disks

@@ -9,3 +9,7 @@ def timed(func):
         return result
 
     return wrap
+
+
+def is_ge(val, name, minimum):
+    assert val >= minimum, f'Too few {name}. Found {val}, should be at least {minimum}.'
