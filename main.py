@@ -85,8 +85,7 @@ if __name__ == '__main__':
                                M_cost_adapted(HCostAdaptedTieBreaking),
                                one_cost_adapted(FCostAdaptedTieBreaking),
                                one_cost_adapted(HCostAdaptedTieBreaking)]
-    # hyperparameters for which generate_h took less than a minute
-    _peg_disk_combinations = [(3, 12), (4, 9), (5, 7)]
+    _peg_disk_combinations = [(3, 13), (4, 10), (5, 8)]
     hanoi_experiments(_peg_disk_combinations, _algorithm_constructors)
-    _pancakes = 9
+    _pancakes = 10
     pancake_experiment(_pancakes, _algorithm_constructors)
