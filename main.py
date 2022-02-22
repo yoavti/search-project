@@ -7,7 +7,7 @@ from search_spaces.hanoi_tower import HanoiTower
 from search_spaces.pancake import Pancake
 
 
-MULT_FACTOR = 2
+MULT_FACTOR = 10
 
 
 def initialize_search_space(search_space):
@@ -16,7 +16,6 @@ def initialize_search_space(search_space):
     M = max(operator_costs) * MULT_FACTOR
     print('generating h*')
     search_space.generate_h()
-    print('finished')
     return epsilon, M
 
 
@@ -25,25 +24,27 @@ def compare_algorithms(search_space, algorithm_constructors):
     for algorithm_constructor in algorithm_constructors:
         algorithm = algorithm_constructor(search_space, epsilon, M)
         print(algorithm.__class__.__name__)
-        runtime, expanded_states = algorithm.until_goal()
-        print('runtime:', runtime)
-        print('expanded_states:', expanded_states)
+        print('expanded_states:', algorithm.until_goal())
         print()
     print()
 
 
 def pancake_experiments(sizes, algorithm_constructors):
+    print('Pancake')
     for graph_size in sizes:
         print(f'{graph_size=}')
         search_space = Pancake(graph_size)
         compare_algorithms(search_space, algorithm_constructors)
+    print()
 
 
 def hanoi_experiments(peg_disk_combinations, algorithm_constructors):
+    print('HanoiTower')
     for pegs, disks in peg_disk_combinations:
         print(f'{pegs=} {disks=}')
         search_space = HanoiTower(pegs, disks)
         compare_algorithms(search_space, algorithm_constructors)
+    print()
 
 
 def non_cost_adapted(algorithm):
@@ -77,8 +78,8 @@ if __name__ == '__main__':
                                epsilon_cost_adapted(HCostAdaptedTieBreaking),
                                M_cost_adapted(FCostAdaptedTieBreaking),
                                M_cost_adapted(HCostAdaptedTieBreaking)]
-    _peg_disk_combinations_backup = [(3, 10), (4, 8), (5, 6), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5)]
-    _peg_disk_combinations = [(3, 10), (4, 8), (5, 6)]
+    _peg_disk_combinations_backup = [(3, 11), (4, 8), (5, 7), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5)]
+    _peg_disk_combinations = [(3, 11), (4, 8), (5, 7)]
     hanoi_experiments(_peg_disk_combinations, _algorithm_constructors)
-    _sizes = list(range(2, 10))
+    _sizes = [9]
     pancake_experiments(_sizes, _algorithm_constructors)
