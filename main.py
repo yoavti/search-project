@@ -29,12 +29,10 @@ def compare_algorithms(search_space, algorithm_constructors):
     print()
 
 
-def pancake_experiments(sizes, algorithm_constructors):
+def pancake_experiment(graph_size, algorithm_constructors):
     print('Pancake')
-    for graph_size in sizes:
-        print(f'{graph_size=}')
-        search_space = Pancake(graph_size)
-        compare_algorithms(search_space, algorithm_constructors)
+    search_space = Pancake(graph_size)
+    compare_algorithms(search_space, algorithm_constructors)
     print()
 
 
@@ -81,5 +79,5 @@ if __name__ == '__main__':
     _peg_disk_combinations_backup = [(3, 11), (4, 8), (5, 7), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5)]
     _peg_disk_combinations = [(3, 11), (4, 8), (5, 7)]
     hanoi_experiments(_peg_disk_combinations, _algorithm_constructors)
-    _sizes = [9]
-    pancake_experiments(_sizes, _algorithm_constructors)
+    _graph_size = 9
+    pancake_experiment(_graph_size, _algorithm_constructors)
