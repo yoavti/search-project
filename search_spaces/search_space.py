@@ -38,6 +38,10 @@ class SearchSpace:
         """The same algorithm to compute h, but adds a constant c to each operator cost."""
         return self.h_dict[s] + c * self.length_dict[s]
 
+    def max_length(self):
+        """Returns the max length of an optimal path from some state to the goal"""
+        return max(self.length_dict.values())
+
     def operator_costs(self) -> Set[float]:
         """Returns a set of all operator costs"""
         raise NotImplemented

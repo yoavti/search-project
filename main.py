@@ -6,15 +6,15 @@ from algorithms.tie_breaking.h_tie_breaking import HTieBreaking
 from search_spaces.hanoi_tower import HanoiTower
 from search_spaces.pancake import Pancake
 
-MULT_FACTOR = 10
-
 
 def initialize_search_space(search_space):
-    operator_costs = search_space.operator_costs()
-    epsilon = min(operator_costs) / MULT_FACTOR
-    M = max(operator_costs) * MULT_FACTOR
     print('generating h*')
     search_space.generate_h()
+    operator_costs = search_space.operator_costs()
+    operator_costs = {cost for cost in operator_costs if cost > 0}
+    max_length = search_space.max_length()
+    epsilon = min(operator_costs) / max_length
+    M = max(operator_costs) * max_length
     return epsilon, M
 
 
@@ -67,6 +67,14 @@ def M_cost_adapted(algorithm):
     return ret
 
 
+def LAMA_cost_adapted(algorithm):
+    def ret(search_space, _, __):
+        print(1)
+        return algorithm(search_space, 1)
+
+    return ret
+
+
 if __name__ == '__main__':
     _algorithm_constructors = [non_cost_adapted(AStar),
                                non_cost_adapted(HCapTieBreaking),
@@ -74,7 +82,9 @@ if __name__ == '__main__':
                                epsilon_cost_adapted(FCostAdaptedTieBreaking),
                                epsilon_cost_adapted(HCostAdaptedTieBreaking),
                                M_cost_adapted(FCostAdaptedTieBreaking),
-                               M_cost_adapted(HCostAdaptedTieBreaking)]
+                               M_cost_adapted(HCostAdaptedTieBreaking),
+                               LAMA_cost_adapted(FCostAdaptedTieBreaking),
+                               LAMA_cost_adapted(HCostAdaptedTieBreaking)]
     # hyperparameters for which generate_h took less than a minute
     _peg_disk_combinations = [(3, 12), (4, 9), (5, 7)]
     hanoi_experiments(_peg_disk_combinations, _algorithm_constructors)
