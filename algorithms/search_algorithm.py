@@ -1,6 +1,6 @@
 from queue import PriorityQueue
-from time import time
 from state import State
+from util import timed
 
 
 class SearchAlgorithm:
@@ -8,8 +8,8 @@ class SearchAlgorithm:
         self.search_space = search_space
         self.open_list = PriorityQueue()
 
+    @timed
     def until_goal(self):
-        start_time = time()
         self.open_list = PriorityQueue()
         closed_list = set()
         self.insert_to_open(self.search_space.get_start())
@@ -18,9 +18,7 @@ class SearchAlgorithm:
             if s in closed_list:
                 continue
             if self.search_space.is_goal(s):
-                runtime = time() - start_time
-                expanded_states = len(closed_list)
-                return runtime, expanded_states
+                return len(closed_list)
             for neighbor, cost in self.search_space.get_neighbors(s):
                 if neighbor in closed_list:
                     continue
@@ -29,6 +27,7 @@ class SearchAlgorithm:
             closed_list.add(s)
         raise RuntimeError('did not reach goal')
 
+    @timed
     def all_states(self):
         self.open_list = PriorityQueue()
         closed_list = set()
