@@ -13,8 +13,8 @@ def initialize_search_space(search_space):
     operator_costs = search_space.operator_costs()
     operator_costs = {cost for cost in operator_costs if cost > 0}
     max_length = search_space.max_length()
-    epsilon = min(operator_costs) / max_length
-    M = max(operator_costs) * max_length
+    epsilon = min(operator_costs) / (max_length + 1)
+    M = max(operator_costs) * (max_length + 1)
     return epsilon, M
 
 
@@ -67,7 +67,7 @@ def M_cost_adapted(algorithm):
     return ret
 
 
-def LAMA_cost_adapted(algorithm):
+def one_cost_adapted(algorithm):
     def ret(search_space, _, __):
         print(1)
         return algorithm(search_space, 1)
@@ -83,8 +83,8 @@ if __name__ == '__main__':
                                epsilon_cost_adapted(HCostAdaptedTieBreaking),
                                M_cost_adapted(FCostAdaptedTieBreaking),
                                M_cost_adapted(HCostAdaptedTieBreaking),
-                               LAMA_cost_adapted(FCostAdaptedTieBreaking),
-                               LAMA_cost_adapted(HCostAdaptedTieBreaking)]
+                               one_cost_adapted(FCostAdaptedTieBreaking),
+                               one_cost_adapted(HCostAdaptedTieBreaking)]
     # hyperparameters for which generate_h took less than a minute
     _peg_disk_combinations = [(3, 12), (4, 9), (5, 7)]
     hanoi_experiments(_peg_disk_combinations, _algorithm_constructors)
