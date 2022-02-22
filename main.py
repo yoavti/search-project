@@ -6,7 +6,6 @@ from algorithms.tie_breaking.h_tie_breaking import HTieBreaking
 from search_spaces.hanoi_tower import HanoiTower
 from search_spaces.pancake import Pancake
 
-
 MULT_FACTOR = 10
 
 

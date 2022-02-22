@@ -1,6 +1,7 @@
 from typing import List, Tuple, Set
-from state import State
+
 from algorithms.ucs import UCS
+from state import State
 
 
 class SearchSpace:

@@ -1,7 +1,8 @@
+import copy
 from typing import List
+
 from search_spaces.search_space import SearchSpace
 from state import State
-import copy
 from util import is_ge
 
 
